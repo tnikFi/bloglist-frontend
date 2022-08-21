@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import Login from './components/Login'
 import Notification from './components/Notification'
+import Toggleable from './components/Toggleable'
 import blogService from './services/blogs'
 
 
@@ -29,18 +30,21 @@ const App = () => {
   }, [])
   
 
-  return (
-    <div>
-      <Notification text={notification.text} color={notification.color} />
-      <h2>{user ? 'blogs' : 'log in to application'}</h2>
-      <Login user={user} setUser={setUser} setNotification={setNotification} />
-      <br />
-      <BlogForm user={user} blogs={blogs} setBlogs={setBlogs} setNotification={setNotification} />
-      {user && blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
-      )}
-    </div>
-  )
+  return <>
+    <Notification text={notification.text} color={notification.color} />
+    <h2>{user ? 'blogs' : 'log in to application'}</h2>
+    <Login user={user} setUser={setUser} setNotification={setNotification} />
+
+    {user &&
+      <Toggleable buttonLabel={'new blog'} >
+        <BlogForm user={user} blogs={blogs} setBlogs={setBlogs} setNotification={setNotification} />
+      </Toggleable>
+    }
+    
+    {user && blogs.map(blog =>
+      <Blog key={blog.id} blog={blog} />
+    )}
+  </>
 }
 
 export default App
