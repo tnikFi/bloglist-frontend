@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import blogsService from '../services/blogs'
 
 
-const BlogForm = ({user, blogs, setBlogs}) => {
+const BlogForm = ({user, blogs, setBlogs, setNotification}) => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
@@ -11,7 +11,13 @@ const BlogForm = ({user, blogs, setBlogs}) => {
         event.preventDefault()
         const blogData = {title, author, url}
         blogsService.create(blogData)
-        .then(response => setBlogs(blogs.concat(response)))
+        .then(response => {
+            setBlogs(blogs.concat(response))
+            setNotification({
+                text: `New blog ${response.title} added`,
+                color: 'green'
+            })
+        })
         .catch(reason => console.log(reason))
     }
 
