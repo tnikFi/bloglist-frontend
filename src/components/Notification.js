@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import styles from './notification.module.css'
 
 const Notification = ({text, color}) => {
