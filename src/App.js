@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import Login from './components/Login'
@@ -11,7 +11,8 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState({text: null, color: null})
-  
+  const newBlogToggleRef = useRef()
+
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
@@ -36,8 +37,8 @@ const App = () => {
     <Login user={user} setUser={setUser} setNotification={setNotification} />
 
     {user &&
-      <Toggleable buttonLabel={'new blog'} >
-        <BlogForm user={user} blogs={blogs} setBlogs={setBlogs} setNotification={setNotification} />
+      <Toggleable buttonLabel={'new blog'} ref={newBlogToggleRef} >
+        <BlogForm user={user} blogs={blogs} setBlogs={setBlogs} setNotification={setNotification} toggleVisibility={newBlogToggleRef.current.toggleVisibility} />
       </Toggleable>
     }
     
