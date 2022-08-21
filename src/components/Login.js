@@ -2,7 +2,7 @@ import { useState } from 'react'
 import loginService from '../services/login'
 
 
-const Login = ({user, setUser, username, password, setUsername, setPassword, setNotification}) => {
+const Login = ({ setUser, username, password, setUsername, setPassword, setNotification }) => {
     const handleInput = setter => {
         return event => {
             event.preventDefault()
@@ -13,25 +13,25 @@ const Login = ({user, setUser, username, password, setUsername, setPassword, set
     const handleSubmit = event => {
         event.preventDefault()
         loginService.login(username, password)
-        .then(({token, username, name}) => {
-            setUsername('')
-            setPassword('')
-            window.localStorage.setItem('token', token)
-            window.localStorage.setItem('username', username)
-            window.localStorage.setItem('name', name)
-            setUser({token, username, name})
-            setNotification({
-                text: null,
-                color: null
+            .then(({ token, username, name }) => {
+                setUsername('')
+                setPassword('')
+                window.localStorage.setItem('token', token)
+                window.localStorage.setItem('username', username)
+                window.localStorage.setItem('name', name)
+                setUser({ token, username, name })
+                setNotification({
+                    text: null,
+                    color: null
+                })
             })
-        })
-        .catch(reason => {
-            const data = reason.response.data
-            setNotification({
-                text: data.error,
-                color: 'red'
+            .catch(reason => {
+                const data = reason.response.data
+                setNotification({
+                    text: data.error,
+                    color: 'red'
+                })
             })
-        })
     }
 
     return <>
@@ -51,7 +51,7 @@ const Login = ({user, setUser, username, password, setUsername, setPassword, set
     </>
 }
 
-const Logout = ({user, setUser}) => {
+const Logout = ({ user, setUser }) => {
     const handleLogout = event => {
         event.preventDefault()
         window.localStorage.removeItem('token')
@@ -63,13 +63,13 @@ const Logout = ({user, setUser}) => {
     return <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
 }
 
-const LoginForm = ({user, setUser, setNotification}) => {
+const LoginForm = ({ user, setUser, setNotification }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     return user
         ?   <Logout user={user} setUser={setUser} />
-        :   <Login user={user} setUser={setUser} username={username} password={password} setUsername={setUsername} setPassword={setPassword} setNotification={setNotification} />
+        :   <Login setUser={setUser} username={username} password={password} setUsername={setUsername} setPassword={setPassword} setNotification={setNotification} />
 }
 
 export default LoginForm

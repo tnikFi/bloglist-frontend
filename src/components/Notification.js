@@ -1,10 +1,10 @@
 import styles from './notification.module.css'
 import PropTypes from 'prop-types'
 
-const Notification = ({text, color}) => {
+const Notification = ({ text, color }) => {
     if (!text) return null
 
-    return <div className={styles.notification} style={{color}} >
+    return <div className={styles.notification} style={{ color }} >
         {text}
     </div>
 }
