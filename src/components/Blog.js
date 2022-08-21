@@ -33,11 +33,14 @@ const Blog = ({blog, setNotification, blogs, setBlogs}) => {
     .then(response => {
       setBlogs(blogs.filter((item, _) => item.id !== blog.id))
       setNotification({
-        text: `Removed ${blog.name}`,
+        text: 'Blog removed',
         color: 'green'
       })
     })
     .catch(response => {
+      if (response.response.status === 404) {
+        setBlogs(blogs.filter((item, _) => item.id !== blog.id))
+      }
       const data = response.response.data
       setNotification({
         text: data.error,
