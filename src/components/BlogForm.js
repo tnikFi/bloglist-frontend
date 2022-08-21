@@ -2,7 +2,7 @@ import { useState } from 'react'
 import blogsService from '../services/blogs'
 
 
-const BlogForm = ({user, blogs, setBlogs, setNotification}) => {
+const BlogForm = ({user, blogs, setBlogs, setNotification, newBlogRef}) => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
@@ -17,6 +17,7 @@ const BlogForm = ({user, blogs, setBlogs, setNotification}) => {
                 text: `New blog ${response.title} added`,
                 color: 'green'
             })
+            newBlogRef.current.toggleVisibility()
         })
         .catch(reason => console.log(reason))
     }

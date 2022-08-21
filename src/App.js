@@ -38,7 +38,7 @@ const App = () => {
 
     {user &&
       <Toggleable buttonLabel={'new blog'} ref={newBlogToggleRef} >
-        <BlogForm user={user} blogs={blogs} setBlogs={setBlogs} setNotification={setNotification} toggleVisibility={newBlogToggleRef.current.toggleVisibility} />
+        <BlogForm user={user} blogs={blogs} setBlogs={setBlogs} setNotification={setNotification} newBlogRef={newBlogToggleRef} />
       </Toggleable>
     }
     
