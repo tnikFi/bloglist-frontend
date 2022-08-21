@@ -19,4 +19,10 @@ const like = blogData => {
   return request.then(response => response.data)
 }
 
-export default { getAll, create, like }
+const remove = id => {
+  const request = axios.delete(`${baseUrl}/${id}`, {headers: {'Authorization': `Bearer ${window.localStorage.getItem('token')}`}})
+  return request.then(response => response.data)
+}
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default { getAll, create, like, remove }

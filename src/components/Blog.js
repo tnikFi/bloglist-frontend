@@ -26,6 +26,26 @@ const Blog = ({blog, setNotification, blogs, setBlogs}) => {
     })
   }
 
+  const handleRemove = () => {
+    const confirm = window.confirm(`Are you sure you want to remove ${blog.name}? This cannot be undone!`)
+    if (!confirm) return;
+    blogsService.remove(blog.id)
+    .then(response => {
+      setBlogs(blogs.filter((item, _) => item.id !== blog.id))
+      setNotification({
+        text: `Removed ${blog.name}`,
+        color: 'green'
+      })
+    })
+    .catch(response => {
+      const data = response.response.data
+      setNotification({
+        text: data.error,
+        color: 'red'
+      })
+    })
+  }
+
   return <div className={styles.blog} >
     
     <label>
@@ -40,6 +60,9 @@ const Blog = ({blog, setNotification, blogs, setBlogs}) => {
         <button onClick={handleLike}>like</button>
         <br/>
         {blog.user.name}
+        {window.localStorage.getItem('username') === blog.user.username &&
+          <><br /><button onClick={handleRemove}>remove</button></>
+        }
       </div>
     }
   </div>
