@@ -42,9 +42,16 @@ const App = () => {
       </Toggleable>
     }
     
-    {user && blogs.map(blog =>
-      <Blog key={blog.id} blog={blog} setNotification={setNotification} blogs={blogs} setBlogs={setBlogs} />
-    )}
+    {user && blogs.sort((a, b) => {
+        if (a.likes === b.likes) {
+          return 0
+        } else {
+          return a.likes < b.likes ? 1 : -1
+        }
+      }).map(blog =>
+        <Blog key={blog.id} blog={blog} setNotification={setNotification} blogs={blogs} setBlogs={setBlogs} />
+      )
+    }
   </>
 }
 
