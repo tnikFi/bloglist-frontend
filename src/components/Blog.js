@@ -57,16 +57,16 @@ const Blog = ({ blog, setNotification, blogs, setBlogs }) => {
         </label>
 
         {expand &&
-<div>
-    {blog.url}<br/>
-    {`${blog.likes} likes`}
-    <button onClick={handleLike}>like</button>
-    <br/>
-    {blog.user.name}
-    {window.localStorage.getItem('username') === blog.user.username &&
-<><br /><button onClick={handleRemove}>remove</button></>
-    }
-</div>
+            <div>
+                {blog.url}<br/>
+                {`${blog.likes} likes`}
+                <button onClick={handleLike}>like</button>
+                <br/>
+                {blog.user.name}
+                {window.localStorage.getItem('username') === blog.user.username &&
+            <><br /><button onClick={handleRemove}>remove</button></>
+                }
+            </div>
         }
     </div>
 }
