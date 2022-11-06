@@ -30,6 +30,7 @@ const App = () => {
         }
     }, [])
 
+    // Event handler for liking blog entries
     const handleLike = blog => {
         blogService.like(blog)
             .then(response => {
@@ -47,6 +48,22 @@ const App = () => {
             })
     }
 
+    // Event handler for submitting new blogs
+    const handleSubmit = (event, { title, author, url }) => {
+        event.preventDefault()
+        const blogData = { title, author, url }
+        blogService.create(blogData)
+            .then(response => {
+                setBlogs(blogs.concat(response))
+                setNotification({
+                    text: `New blog ${response.title} added`,
+                    color: 'green'
+                })
+                newBlogToggleRef.current.toggleVisibility()
+            })
+            .catch(reason => console.log(reason))
+    }
+
 
     return <>
         <Notification text={notification.text} color={notification.color} />
@@ -55,7 +72,7 @@ const App = () => {
 
         {user &&
       <Toggleable buttonLabel={'new blog'} ref={newBlogToggleRef} >
-          <BlogForm user={user} blogs={blogs} setBlogs={setBlogs} setNotification={setNotification} newBlogRef={newBlogToggleRef} />
+          <BlogForm user={user} handleSubmit={handleSubmit} />
       </Toggleable>
         }
 

@@ -1,26 +1,10 @@
 import { useState } from 'react'
-import blogsService from '../services/blogs'
 
 
-const BlogForm = ({ user, blogs, setBlogs, setNotification, newBlogRef }) => {
+const BlogForm = ({ user, handleSubmit }) => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
-
-    const handleSubmit = event => {
-        event.preventDefault()
-        const blogData = { title, author, url }
-        blogsService.create(blogData)
-            .then(response => {
-                setBlogs(blogs.concat(response))
-                setNotification({
-                    text: `New blog ${response.title} added`,
-                    color: 'green'
-                })
-                newBlogRef.current.toggleVisibility()
-            })
-            .catch(reason => console.log(reason))
-    }
 
     const handleInput = setter => {
         return event => {
@@ -49,7 +33,7 @@ const BlogForm = ({ user, blogs, setBlogs, setNotification, newBlogRef }) => {
             <input type='text' name='url' value={url} onChange={handleInput(setUrl)} />
         </label>
         <br />
-        <button onClick={handleSubmit}>create</button>
+        <button onClick={() => handleSubmit(event, { title, author, url })}>create</button>
     </>
 }
 
