@@ -10,7 +10,7 @@ const Blog = ({ blog, setNotification, blogs, setBlogs, handleLike }) => {
     }
 
     const handleRemove = () => {
-        const confirm = window.confirm(`Are you sure you want to remove ${blog.name}? This cannot be undone!`)
+        const confirm = window.confirm(`Are you sure you want to remove ${blog.title}? This cannot be undone!`)
         if (!confirm) return
         blogsService.remove(blog.id)
             .then(() => {
