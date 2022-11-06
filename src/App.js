@@ -30,6 +30,23 @@ const App = () => {
         }
     }, [])
 
+    const handleLike = blog => {
+        blogService.like(blog)
+            .then(response => {
+                setBlogs(blogs.map(item => {
+                    if (item.id === blog.id) return Object.assign({}, { ...blog, likes: response.likes }, { valid: true })
+                    return item
+                }))
+            })
+            .catch(response => {
+                const data = response.response.data
+                setNotification({
+                    text: data.error,
+                    color: 'red'
+                })
+            })
+    }
+
 
     return <>
         <Notification text={notification.text} color={notification.color} />
@@ -49,7 +66,7 @@ const App = () => {
                 return a.likes < b.likes ? 1 : -1
             }
         }).map(blog =>
-            <Blog key={blog.id} blog={blog} setNotification={setNotification} blogs={blogs} setBlogs={setBlogs} />
+            <Blog key={blog.id} blog={blog} setNotification={setNotification} blogs={blogs} setBlogs={setBlogs} handleLike={handleLike} />
         )
         }
     </>
